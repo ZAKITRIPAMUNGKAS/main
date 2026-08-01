@@ -151,17 +151,25 @@
   .burger{display:none; background:none; border:none; cursor:pointer; padding:6px;}
   .burger span{display:block; width:22px; height:2px; background:var(--ink); margin:5px 0; border-radius:2px;}
 
+  #mnav{display:none;}
+
   /* ---------- HERO ---------- */
   .hero{
-    position:relative; background:var(--blue-deep) center/cover no-repeat; color:#fff;
-    overflow:hidden; padding:48px 0 54px; min-height:calc(100vh - 74px);
+    position:relative;
+    background:
+      radial-gradient(circle at 85% 25%, rgba(37,99,235,0.4) 0%, transparent 45%),
+      radial-gradient(circle at 15% 75%, rgba(234,88,12,0.25) 0%, transparent 40%),
+      linear-gradient(135deg, #0b3b66 0%, #0f172a 100%);
+    color:#fff;
+    overflow:hidden; padding:52px 0 60px; min-height:calc(100vh - 74px);
     display:flex; align-items:center; box-sizing:border-box;
   }
   .hero::before{
     content:""; position:absolute; inset:0;
-    background:
-      linear-gradient(105deg, rgba(11,59,102,0.92) 0%, rgba(15,23,42,0.85) 50%, rgba(11,59,102,0.65) 100%),
-      radial-gradient(circle at 80% 20%, rgba(37,99,235,0.35), transparent 50%);
+    background-image:
+      linear-gradient(to right, rgba(255,255,255,0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255,255,255,0.05) 1px, transparent 1px);
+    background-size: 40px 40px;
     pointer-events:none;
   }
   .hero .wrap{width:100%;}
