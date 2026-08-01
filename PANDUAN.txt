@@ -1,0 +1,112 @@
+====================================================================
+PANDUAN PEMASANGAN & PENGGUNAAN - CV. LISTRINDO JAYA ELEKTRIK
+====================================================================
+
+STRUKTUR FILE
+--------------------------------------------------------------------
+index.html              -> halaman utama website
+api/helpers.php         -> fungsi bantu (jangan diubah/dihapus)
+api/riwayat.php         -> mesin penyimpan foto riwayat pekerjaan
+api/testimoni.php       -> mesin penyimpan testimoni
+data/riwayat.json       -> tempat data foto riwayat pekerjaan disimpan
+data/testimoni.json     -> tempat data testimoni disimpan
+data/.htaccess          -> mengunci folder data dari akses luar
+uploads/kategori/       -> ISI FOTO KATEGORI PRODUK DI SINI (manual)
+uploads/riwayat/        -> foto riwayat pekerjaan tersimpan otomatis di sini
+uploads/.htaccess       -> pengaman folder uploads
+
+CARA UPLOAD SEMUA FILE INI KE CPANEL
+--------------------------------------------------------------------
+1. Login ke cPanel Anda:
+   https://www.listrindojayaelektrik.com:2083
+   atau
+   https://www.listrindojayaelektrik.com/cpanel
+   (kalau dua-duanya tidak bisa dibuka, tanya alamat login cPanel
+   ke penyedia hosting Anda - biasanya juga dikirim lewat email
+   saat pertama daftar hosting)
+
+2. Buka menu "File Manager".
+
+3. Masuk ke folder public_html (folder utama website Anda).
+
+4. Upload SEMUA file & folder di atas ke situ (index.html, folder
+   api, data, uploads, dst) dengan struktur folder yang sama persis.
+
+5. Klik kanan folder "uploads" dan "data" -> Permissions/Ubah Izin
+   -> set ke 755 (kalau muncul error "gagal menyimpan", coba naikkan
+   ke 775).
+
+====================================================================
+1. GANTI FOTO KATEGORI PRODUK (lewat File Manager, TANPA LOGIN ADMIN)
+====================================================================
+- Buka File Manager cPanel -> masuk ke folder:
+  public_html/uploads/kategori/
+
+- Upload foto dengan NAMA FILE PERSIS seperti berikut (huruf kecil,
+  pakai tanda "-", format .jpg):
+
+    kabel-tv.jpg
+    kabel-ac.jpg
+    maintenance-wd40.jpg
+    safety-equipment.jpg
+    perlengkapan-elektrikal.jpg
+
+- Kalau nama file baru sama persis dengan nama file lama, File
+  Manager akan menawarkan "Overwrite/Timpa" - pilih itu untuk
+  mengganti foto lama.
+
+- Foto langsung tampil di website begitu halaman dibuka lagi
+  (kalau tidak berubah, tekan Ctrl+F5 di browser untuk membersihkan
+  cache).
+
+- Selama foto belum diupload, website tetap menampilkan ikon lama
+  sebagai gantinya (tidak akan tampil rusak/kosong).
+
+Catatan: nama file HARUS persis sama (huruf besar/kecil ikut
+berpengaruh di sebagian besar hosting Linux). Kalau ingin dibuatkan
+untuk kategori Layanan / Katalog Produk juga, tinggal beri tahu.
+
+====================================================================
+2. RIWAYAT PEKERJAAN (upload lewat website, tersimpan otomatis)
+====================================================================
+- Pengunjung (atau Anda sendiri) tinggal buka halaman "Riwayat
+  Pekerjaan" di website, lalu unggah foto lewat tombol atau
+  drag & drop.
+- Foto akan otomatis tersimpan permanen di folder
+  uploads/riwayat/ dan tercatat di data/riwayat.json.
+- Foto akan tetap tampil untuk SEMUA pengunjung yang membuka
+  halaman tersebut, kapan pun.
+- Setiap foto bisa diberi keterangan (otomatis tersimpan begitu
+  kolom keterangan selesai diketik/pindah fokus), dan bisa dihapus
+  lewat tombol silang (x) di foto.
+
+PENTING: karena tidak ada login admin, siapa pun yang membuka
+website bisa mengunggah atau menghapus foto riwayat pekerjaan ini.
+Kalau nanti muncul foto yang tidak semestinya (spam), foto tersebut
+bisa dihapus manual lewat File Manager -> folder uploads/riwayat/,
+atau beri tahu saya kalau ingin ditambahkan proteksi (misalnya kode
+rahasia sebelum bisa upload/hapus).
+
+====================================================================
+3. TESTIMONI (tersimpan otomatis)
+====================================================================
+- Form testimoni di halaman "Testimoni" sekarang benar-benar
+  tersimpan ke data/testimoni.json dan tampil untuk semua
+  pengunjung, bukan cuma sesi kunjungan itu saja.
+- Sudah ada proteksi spam sederhana (honeypot) untuk menyaring
+  sebagian bot otomatis, tapi tetap disarankan sesekali dicek -
+  kalau ada testimoni yang tidak pantas/spam, buka File Manager ->
+  data/testimoni.json -> edit filenya langsung untuk menghapus
+  bagian yang tidak diinginkan (formatnya JSON, mirip daftar).
+
+====================================================================
+CATATAN TEKNIS
+====================================================================
+- Website ini butuh PHP aktif di hosting (hampir semua cPanel
+  sudah aktif secara default).
+- Folder "data" dan "uploads" dikunci dari akses langsung/pencurian
+  data lewat file .htaccess yang sudah disertakan - jangan hapus
+  file .htaccess tersebut.
+- Selalu simpan salinan cadangan (backup) folder "data" dan
+  "uploads" secara berkala, karena isinya adalah data asli website
+  Anda (foto & testimoni).

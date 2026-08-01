@@ -1,0 +1,6 @@
+[
+  {"id": 1, "name": "Budi Santoso", "role": "Manajer Operasional, Gedung Perkantoran Tebet", "rate": 5, "message": "Tim instalasi datang tepat waktu dan rapi. Pemasangan AC di kantor kami selesai dalam sehari tanpa kendala berarti."},
+  {"id": 2, "name": "Rina Wulandari", "role": "Pemilik, Toko Bangunan Sumber Jaya", "rate": 5, "message": "Kualitas kabel dan perlengkapan elektrikal yang mereka sediakan sangat sesuai standar. Sudah tiga proyek kami percayakan ke Listrindo."},
+  {"id": 3, "name": "Ahmad Fauzan", "role": "HSE Officer, Pabrik Manufaktur Cikarang", "rate": 5, "message": "Layanan konsultasi tekniknya membantu kami memilih APD yang tepat untuk area produksi. Responsif dan komunikatif."},
+  {"id": 4, "name": "Siti Aminah", "role": "Pelanggan Perorangan, Jakarta Selatan", "rate": 5, "message": "Perawatan berkala sistem elektrikal rumah kami jadi lebih terjadwal dan aman. Tenaga kerjanya profesional dan sopan."}
+]
