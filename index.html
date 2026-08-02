@@ -157,9 +157,8 @@
   .hero{
     position:relative;
     background:
-      radial-gradient(circle at 85% 25%, rgba(37,99,235,0.4) 0%, transparent 45%),
-      radial-gradient(circle at 15% 75%, rgba(234,88,12,0.25) 0%, transparent 40%),
-      linear-gradient(135deg, #0b3b66 0%, #0f172a 100%);
+      linear-gradient(105deg, rgba(11,59,102,0.88) 0%, rgba(15,23,42,0.82) 50%, rgba(11,59,102,0.7) 100%),
+      url('uploads/hero-bg.jpg') center/cover no-repeat;
     color:#fff;
     overflow:hidden; padding:52px 0 60px; min-height:calc(100vh - 74px);
     display:flex; align-items:center; box-sizing:border-box;
@@ -167,8 +166,8 @@
   .hero::before{
     content:""; position:absolute; inset:0;
     background-image:
-      linear-gradient(to right, rgba(255,255,255,0.05) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(255,255,255,0.05) 1px, transparent 1px);
+      linear-gradient(to right, rgba(255,255,255,0.04) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255,255,255,0.04) 1px, transparent 1px);
     background-size: 40px 40px;
     pointer-events:none;
   }
