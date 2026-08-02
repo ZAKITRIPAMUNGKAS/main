@@ -1260,11 +1260,13 @@
 
 <!-- Floating Action Buttons & AI Chatbot Hub -->
 <div id="floating-hub" class="floating-hub">
-  <!-- Chatbot Window Modal -->
+  <!-- Chatbot Window Modal (Positioned Above FAB Dock) -->
   <div id="chatWindow" class="chat-window">
     <div class="chat-header">
       <div class="chat-avatar-wrap">
-        <div class="chat-avatar"><i class="fas fa-robot"></i></div>
+        <div class="chat-avatar">
+          <img src="ai_chatbot_avatar.jpg" alt="Listrindo AI Assistant">
+        </div>
         <span class="chat-status-dot"></span>
       </div>
       <div class="chat-header-info">
@@ -1278,7 +1280,7 @@
       <div class="chat-msg bot">
         <div class="chat-bubble">
           Halo! 👋 Saya <b>Listrindo AI Assistant</b>. Ada yang bisa saya bantu hari ini? 
-          <br><br>Anda bisa menanyakan produk kabel, alat keselamatan K3L, stok, hingga penawaran harga proyek.
+          <br><br>Anda bisa menanyakan stok produk kabel, perlengkapan K3L/APD, lokasi toko, hingga penawaran harga proyek.
         </div>
       </div>
       <div class="chat-chips" id="chatChips">
@@ -1300,7 +1302,7 @@
     <!-- Chatbot Toggle Button -->
     <button id="chatToggleBtn" class="fab-btn fab-chat" aria-label="Tanya AI Assistant">
       <span class="fab-badge">AI</span>
-      <i class="fas fa-comment-dots icon-open"></i>
+      <img src="ai_chatbot_avatar.jpg" alt="AI Chat" class="icon-open fab-avatar-img">
       <i class="fas fa-times icon-close"></i>
       <span class="fab-tooltip">Tanya AI Assistant</span>
     </button>
@@ -1329,7 +1331,6 @@
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  gap: 12px;
   font-family: var(--sans, 'Inter', system-ui, sans-serif);
 }
 
@@ -1359,14 +1360,26 @@
 
 /* Chatbot FAB */
 .fab-chat {
-  width: 52px;
-  height: 52px;
+  width: 54px;
+  height: 54px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #2563eb, #1e40af);
+  background: linear-gradient(135deg, #0b3b66, #1d4ed8);
   color: #fff;
   font-size: 20px;
+  padding: 0;
+  overflow: visible;
+  border: 2px solid rgba(255,255,255,0.2);
 }
-.fab-chat .icon-close { display: none; }
+.fab-avatar-img {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.fab-chat .icon-close { display: none; font-size: 22px; }
+.fab-chat.active {
+  background: #0b132b;
+}
 .fab-chat.active .icon-open { display: none; }
 .fab-chat.active .icon-close { display: block; }
 .fab-chat .fab-badge {
@@ -1379,8 +1392,9 @@
   font-weight: 800;
   padding: 2px 6px;
   border-radius: 10px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
   font-family: var(--mono);
+  z-index: 2;
 }
 
 /* Toko Online FAB */
@@ -1392,7 +1406,7 @@
   font-weight: 700;
   letter-spacing: 0.04em;
   gap: 9px;
-  border: 1px solid rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.18);
 }
 .fab-shop:hover {
   box-shadow: 0 12px 30px rgba(29,78,216,0.45);
@@ -1414,8 +1428,9 @@
 /* Tooltips */
 .fab-tooltip {
   position: absolute;
-  right: 62px;
-  background: #0b132b;
+  right: 64px;
+  background: rgba(11, 19, 43, 0.92);
+  backdrop-filter: blur(8px);
   color: #fff;
   font-size: 12px;
   font-weight: 600;
@@ -1427,6 +1442,7 @@
   transform: translateX(8px);
   transition: opacity 0.2s ease, transform 0.2s ease;
   box-shadow: 0 4px 14px rgba(0,0,0,0.2);
+  border: 1px solid rgba(255,255,255,0.1);
 }
 .fab-btn:hover .fab-tooltip {
   opacity: 1;
@@ -1435,22 +1451,25 @@
 
 /* ---------- AI CHATBOT WINDOW STYLES ---------- */
 .chat-window {
-  width: 360px;
+  position: fixed;
+  bottom: 90px;
+  right: 24px;
+  width: 370px;
   max-width: calc(100vw - 32px);
-  height: 480px;
+  height: 500px;
   max-height: calc(100vh - 120px);
   background: #ffffff;
   border-radius: 20px;
-  box-shadow: 0 20px 50px rgba(11,19,43,0.22);
+  box-shadow: 0 24px 60px rgba(11,19,43,0.25);
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  border: 1px solid rgba(11,59,102,0.12);
+  border: 1px solid rgba(11,59,102,0.15);
   opacity: 0;
   pointer-events: none;
   transform: translateY(20px) scale(0.95);
   transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
-  margin-bottom: 8px;
+  z-index: 10000;
 }
 
 .chat-window.active {
@@ -1462,24 +1481,27 @@
 .chat-header {
   background: linear-gradient(135deg, #0b3b66, #1d4ed8);
   color: #fff;
-  padding: 16px 20px;
+  padding: 14px 18px;
   display: flex;
   align-items: center;
   gap: 12px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
 }
 .chat-avatar-wrap {
   position: relative;
 }
 .chat-avatar {
-  width: 40px;
-  height: 40px;
+  width: 42px;
+  height: 42px;
   border-radius: 50%;
-  background: rgba(255,255,255,0.18);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 18px;
-  color: #f59e0b;
+  background: rgba(255,255,255,0.15);
+  overflow: hidden;
+  border: 2px solid rgba(255,255,255,0.4);
+}
+.chat-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 .chat-status-dot {
   position: absolute;
@@ -1496,16 +1518,17 @@
   font-size: 15px;
   font-weight: 700;
   color: #ffffff;
+  letter-spacing: -0.01em;
 }
 .chat-header-sub {
   font-size: 11px;
-  color: rgba(255,255,255,0.8);
+  color: rgba(255,255,255,0.85);
 }
 .chat-close-btn {
   margin-left: auto;
   background: transparent;
   border: none;
-  color: rgba(255,255,255,0.8);
+  color: rgba(255,255,255,0.85);
   font-size: 16px;
   cursor: pointer;
   padding: 4px 8px;
@@ -1513,7 +1536,7 @@
   transition: background 0.2s ease, color 0.2s ease;
 }
 .chat-close-btn:hover {
-  background: rgba(255,255,255,0.15);
+  background: rgba(255,255,255,0.18);
   color: #fff;
 }
 
@@ -1527,10 +1550,22 @@
   gap: 12px;
 }
 
+/* Custom Scrollbar for Chat Body */
+.chat-body::-webkit-scrollbar {
+  width: 5px;
+}
+.chat-body::-webkit-scrollbar-track {
+  background: transparent;
+}
+.chat-body::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 10px;
+}
+
 .chat-msg {
   display: flex;
   flex-direction: column;
-  max-width: 85%;
+  max-width: 86%;
 }
 .chat-msg.bot {
   align-self: flex-start;
@@ -1543,7 +1578,7 @@
   padding: 11px 15px;
   border-radius: 16px;
   font-size: 13.5px;
-  line-height: 1.45;
+  line-height: 1.48;
   word-break: break-word;
 }
 .chat-msg.bot .chat-bubble {
@@ -1551,12 +1586,13 @@
   color: #1e293b;
   border: 1px solid #e2e8f0;
   border-top-left-radius: 4px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.03);
 }
 .chat-msg.user .chat-bubble {
   background: #2563eb;
   color: #ffffff;
   border-top-right-radius: 4px;
+  box-shadow: 0 2px 8px rgba(37,99,235,0.25);
 }
 
 .chat-chips {
@@ -1599,16 +1635,17 @@
   border-radius: 20px;
   font-size: 13px;
   outline: none;
-  transition: border-color 0.2s ease;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 .chat-footer input:focus {
   border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37,99,235,0.12);
 }
 .chat-footer button {
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  background: #2563eb;
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
   color: #fff;
   border: none;
   cursor: pointer;
@@ -1617,10 +1654,19 @@
   justify-content: center;
   font-size: 14px;
   transition: background 0.2s ease, transform 0.15s ease;
+  box-shadow: 0 3px 10px rgba(37,99,235,0.3);
 }
 .chat-footer button:hover {
-  background: #1d4ed8;
-  transform: scale(1.05);
+  transform: scale(1.06);
+}
+
+@media (max-width: 600px) {
+  .chat-window {
+    bottom: 82px;
+    right: 16px;
+    width: calc(100vw - 32px);
+    height: calc(100vh - 110px);
+  }
 }
 </style>
 
