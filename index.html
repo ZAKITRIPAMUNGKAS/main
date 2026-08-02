@@ -1307,7 +1307,7 @@
     <button id="chatToggleBtn" class="fab-btn fab-chat" aria-label="Tanya AI Assistant">
       <span class="fab-badge">AI</span>
       <div class="icon-open fab-avatar-svg-wrap">
-        <svg class="minimal-bot-icon" viewBox="0 0 100 100" style="width:34px;height:34px;">
+        <svg class="minimal-bot-icon" viewBox="0 0 100 100" style="width:32px;height:32px;">
           <path d="M 50 18 C 30 18 15 32 15 50 C 15 62 23 72 35 77 C 33 84 27 91 25 93 C 28 93 38 91 47 81 C 48 81 49 81 50 81 C 70 81 85 67 85 50 C 85 32 70 18 50 18 Z" fill="#ffffff"/>
           <path d="M 33 48 Q 38 42 43 48" fill="none" stroke="#0b3b66" stroke-width="5" stroke-linecap="round"/>
           <path d="M 57 48 Q 62 42 67 48" fill="none" stroke="#0b3b66" stroke-width="5" stroke-linecap="round"/>
@@ -1318,15 +1318,15 @@
     </button>
 
     <!-- Toko Online Button -->
-    <a href="https://shop.tepegrafi.id" target="_blank" rel="noopener" class="fab-btn fab-shop">
+    <a href="https://shop.tepegrafi.id" target="_blank" rel="noopener" aria-label="Toko Online" class="fab-btn fab-shop">
       <i class="fas fa-shopping-bag"></i>
-      <span class="fab-text">Toko Online</span>
+      <span class="fab-tooltip">Kunjungi Toko Online</span>
     </a>
 
     <!-- WhatsApp Button -->
     <a href="https://wa.me/628567224975" target="_blank" rel="noopener" aria-label="Chat WhatsApp" class="fab-btn fab-wa">
       <i class="fab fa-whatsapp"></i>
-      <span class="fab-tooltip">Chat WhatsApp</span>
+      <span class="fab-tooltip">Chat WhatsApp (+628567224975)</span>
     </a>
   </div>
 </div>
@@ -1347,16 +1347,19 @@
 .fab-stack {
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
-  gap: 10px;
+  align-items: center;
+  gap: 12px;
+  width: 52px;
 }
 
 .fab-btn {
   position: relative;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: 28px;
   text-decoration: none;
   border: none;
   cursor: pointer;
@@ -1365,27 +1368,23 @@
 }
 
 .fab-btn:hover {
-  transform: translateY(-3px) scale(1.04);
+  transform: translateY(-3px) scale(1.08);
 }
 
 /* Chatbot FAB */
 .fab-chat {
-  width: 54px;
-  height: 54px;
-  border-radius: 50%;
   background: linear-gradient(135deg, #0b3b66, #1d4ed8);
   color: #fff;
   font-size: 20px;
   padding: 0;
-  overflow: visible;
   border: 2px solid rgba(255,255,255,0.2);
 }
 .fab-avatar-svg-wrap {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 42px;
-  height: 42px;
+  width: 36px;
+  height: 36px;
 }
 .fab-chat .icon-close { display: none; font-size: 22px; }
 .fab-chat.active {
@@ -1410,24 +1409,17 @@
 
 /* Toko Online FAB */
 .fab-shop {
-  padding: 11px 20px;
   background: linear-gradient(135deg, #1d4ed8, #0b3b66);
   color: #fff;
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  gap: 9px;
-  border: 1px solid rgba(255,255,255,0.18);
+  font-size: 20px;
+  border: 2px solid rgba(255,255,255,0.2);
 }
 .fab-shop:hover {
-  box-shadow: 0 12px 30px rgba(29,78,216,0.45);
+  box-shadow: 0 12px 30px rgba(29,78,216,0.5);
 }
 
 /* WhatsApp FAB */
 .fab-wa {
-  width: 52px;
-  height: 52px;
-  border-radius: 50%;
   background: #25d366;
   color: #fff;
   font-size: 24px;
@@ -1445,15 +1437,15 @@
   color: #fff;
   font-size: 12px;
   font-weight: 600;
-  padding: 6px 12px;
-  border-radius: 8px;
+  padding: 7px 14px;
+  border-radius: 10px;
   white-space: nowrap;
   opacity: 0;
   pointer-events: none;
   transform: translateX(8px);
   transition: opacity 0.2s ease, transform 0.2s ease;
-  box-shadow: 0 4px 14px rgba(0,0,0,0.2);
-  border: 1px solid rgba(255,255,255,0.1);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+  border: 1px solid rgba(255,255,255,0.12);
 }
 .fab-btn:hover .fab-tooltip {
   opacity: 1;
