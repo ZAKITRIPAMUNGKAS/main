@@ -1258,28 +1258,465 @@
   revealElements.forEach(el => observer.observe(el));
 </script>
 
-<!-- Floating Action Buttons -->
-<div id="fab-wrap" style="position:fixed; bottom:28px; right:28px; z-index:999; display:flex; flex-direction:column; gap:10px; align-items:flex-end;">
-  <a href="https://shop.tepegrafi.id" target="_blank" rel="noopener"
-     style="display:inline-flex; align-items:center; gap:9px; padding:11px 20px; border-radius:28px;
-            background:linear-gradient(135deg,#2563eb,#1d4ed8); color:#fff; font-family:var(--mono);
-            font-size:12px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase;
-            box-shadow:0 6px 22px rgba(37,99,235,0.5); transition:transform .2s ease, box-shadow .2s ease;
-            animation:pulseGlow 3s infinite ease-in-out;"
-     onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 10px 30px rgba(37,99,235,0.6)'"
-     onmouseout="this.style.transform='';this.style.boxShadow='0 6px 22px rgba(37,99,235,0.5)'">
-    <i class="fas fa-shopping-bag" style="font-size:14px;"></i> Toko Online
-  </a>
-  <a href="https://wa.me/628567224975" target="_blank" rel="noopener"
-     aria-label="Chat WhatsApp"
-     style="width:52px; height:52px; border-radius:50%; background:#25d366; color:#fff;
-            display:flex; align-items:center; justify-content:center; font-size:24px;
-            box-shadow:0 4px 16px rgba(37,211,102,0.45); transition:transform .2s ease, box-shadow .2s ease;"
-     onmouseover="this.style.transform='scale(1.12)';this.style.boxShadow='0 8px 24px rgba(37,211,102,0.6)'"
-     onmouseout="this.style.transform='';this.style.boxShadow='0 4px 16px rgba(37,211,102,0.45)'">
-    <i class="fab fa-whatsapp"></i>
-  </a>
+<!-- Floating Action Buttons & AI Chatbot Hub -->
+<div id="floating-hub" class="floating-hub">
+  <!-- Chatbot Window Modal -->
+  <div id="chatWindow" class="chat-window">
+    <div class="chat-header">
+      <div class="chat-avatar-wrap">
+        <div class="chat-avatar"><i class="fas fa-robot"></i></div>
+        <span class="chat-status-dot"></span>
+      </div>
+      <div class="chat-header-info">
+        <h5>Listrindo AI Assistant</h5>
+        <span class="chat-header-sub">Online | Siap Membantu 24/7</span>
+      </div>
+      <button class="chat-close-btn" id="chatCloseBtn" aria-label="Tutup Chat"><i class="fas fa-times"></i></button>
+    </div>
+
+    <div class="chat-body" id="chatBody">
+      <div class="chat-msg bot">
+        <div class="chat-bubble">
+          Halo! 👋 Saya <b>Listrindo AI Assistant</b>. Ada yang bisa saya bantu hari ini? 
+          <br><br>Anda bisa menanyakan produk kabel, alat keselamatan K3L, stok, hingga penawaran harga proyek.
+        </div>
+      </div>
+      <div class="chat-chips" id="chatChips">
+        <button class="chip-btn" data-query="Kabel listrik apa saja yang tersedia?">⚡ Katalog Kabel</button>
+        <button class="chip-btn" data-query="Apa saja produk keselamatan & APD K3L?">🛡️ Produk APD & Safety</button>
+        <button class="chip-btn" data-query="Di mana lokasi toko dan nomor WhatsApp?">📍 Lokasi & Kontak</button>
+        <button class="chip-btn" data-query="Bagaimana cara memesan di Toko Online?">🛒 Cara Pemesanan</button>
+      </div>
+    </div>
+
+    <form class="chat-footer" id="chatForm">
+      <input type="text" id="chatInput" placeholder="Ketik pertanyaan Anda..." autocomplete="off">
+      <button type="submit" id="chatSendBtn" aria-label="Kirim Pesan"><i class="fas fa-paper-plane"></i></button>
+    </form>
+  </div>
+
+  <!-- FAB Action Stack -->
+  <div class="fab-stack">
+    <!-- Chatbot Toggle Button -->
+    <button id="chatToggleBtn" class="fab-btn fab-chat" aria-label="Tanya AI Assistant">
+      <span class="fab-badge">AI</span>
+      <i class="fas fa-comment-dots icon-open"></i>
+      <i class="fas fa-times icon-close"></i>
+      <span class="fab-tooltip">Tanya AI Assistant</span>
+    </button>
+
+    <!-- Toko Online Button -->
+    <a href="https://shop.tepegrafi.id" target="_blank" rel="noopener" class="fab-btn fab-shop">
+      <i class="fas fa-shopping-bag"></i>
+      <span class="fab-text">Toko Online</span>
+    </a>
+
+    <!-- WhatsApp Button -->
+    <a href="https://wa.me/628567224975" target="_blank" rel="noopener" aria-label="Chat WhatsApp" class="fab-btn fab-wa">
+      <i class="fab fa-whatsapp"></i>
+      <span class="fab-tooltip">Chat WhatsApp</span>
+    </a>
+  </div>
 </div>
+
+<style>
+/* ---------- FLOATING HUB & FAB STYLES ---------- */
+.floating-hub {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 12px;
+  font-family: var(--sans, 'Inter', system-ui, sans-serif);
+}
+
+.fab-stack {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+.fab-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 28px;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+  transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.25s ease, background 0.2s ease;
+}
+
+.fab-btn:hover {
+  transform: translateY(-3px) scale(1.04);
+}
+
+/* Chatbot FAB */
+.fab-chat {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #2563eb, #1e40af);
+  color: #fff;
+  font-size: 20px;
+}
+.fab-chat .icon-close { display: none; }
+.fab-chat.active .icon-open { display: none; }
+.fab-chat.active .icon-close { display: block; }
+.fab-chat .fab-badge {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  background: #f59e0b;
+  color: #0b132b;
+  font-size: 9px;
+  font-weight: 800;
+  padding: 2px 6px;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  font-family: var(--mono);
+}
+
+/* Toko Online FAB */
+.fab-shop {
+  padding: 11px 20px;
+  background: linear-gradient(135deg, #1d4ed8, #0b3b66);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  gap: 9px;
+  border: 1px solid rgba(255,255,255,0.15);
+}
+.fab-shop:hover {
+  box-shadow: 0 12px 30px rgba(29,78,216,0.45);
+}
+
+/* WhatsApp FAB */
+.fab-wa {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: #25d366;
+  color: #fff;
+  font-size: 24px;
+}
+.fab-wa:hover {
+  box-shadow: 0 10px 28px rgba(37,211,102,0.55);
+}
+
+/* Tooltips */
+.fab-tooltip {
+  position: absolute;
+  right: 62px;
+  background: #0b132b;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 8px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(8px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.2);
+}
+.fab-btn:hover .fab-tooltip {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* ---------- AI CHATBOT WINDOW STYLES ---------- */
+.chat-window {
+  width: 360px;
+  max-width: calc(100vw - 32px);
+  height: 480px;
+  max-height: calc(100vh - 120px);
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 20px 50px rgba(11,19,43,0.22);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid rgba(11,59,102,0.12);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(20px) scale(0.95);
+  transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
+  margin-bottom: 8px;
+}
+
+.chat-window.active {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0) scale(1);
+}
+
+.chat-header {
+  background: linear-gradient(135deg, #0b3b66, #1d4ed8);
+  color: #fff;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.chat-avatar-wrap {
+  position: relative;
+}
+.chat-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.18);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  color: #f59e0b;
+}
+.chat-status-dot {
+  position: absolute;
+  bottom: 1px;
+  right: 1px;
+  width: 10px;
+  height: 10px;
+  background: #22c55e;
+  border: 2px solid #0b3b66;
+  border-radius: 50%;
+}
+.chat-header-info h5 {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+  color: #ffffff;
+}
+.chat-header-sub {
+  font-size: 11px;
+  color: rgba(255,255,255,0.8);
+}
+.chat-close-btn {
+  margin-left: auto;
+  background: transparent;
+  border: none;
+  color: rgba(255,255,255,0.8);
+  font-size: 16px;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+.chat-close-btn:hover {
+  background: rgba(255,255,255,0.15);
+  color: #fff;
+}
+
+.chat-body {
+  flex: 1;
+  padding: 16px;
+  overflow-y: auto;
+  background: #f8fafc;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.chat-msg {
+  display: flex;
+  flex-direction: column;
+  max-width: 85%;
+}
+.chat-msg.bot {
+  align-self: flex-start;
+}
+.chat-msg.user {
+  align-self: flex-end;
+}
+
+.chat-bubble {
+  padding: 11px 15px;
+  border-radius: 16px;
+  font-size: 13.5px;
+  line-height: 1.45;
+  word-break: break-word;
+}
+.chat-msg.bot .chat-bubble {
+  background: #ffffff;
+  color: #1e293b;
+  border: 1px solid #e2e8f0;
+  border-top-left-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+.chat-msg.user .chat-bubble {
+  background: #2563eb;
+  color: #ffffff;
+  border-top-right-radius: 4px;
+}
+
+.chat-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 4px;
+}
+.chip-btn {
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  color: #0b3b66;
+  font-size: 11.5px;
+  font-weight: 600;
+  padding: 6px 11px;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+.chip-btn:hover {
+  background: #2563eb;
+  color: #ffffff;
+  border-color: #2563eb;
+  transform: translateY(-1px);
+}
+
+.chat-footer {
+  padding: 12px 14px;
+  background: #ffffff;
+  border-top: 1px solid #e2e8f0;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.chat-footer input {
+  flex: 1;
+  border: 1px solid #cbd5e1;
+  padding: 9px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+.chat-footer input:focus {
+  border-color: #2563eb;
+}
+.chat-footer button {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #2563eb;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  transition: background 0.2s ease, transform 0.15s ease;
+}
+.chat-footer button:hover {
+  background: #1d4ed8;
+  transform: scale(1.05);
+}
+</style>
+
+<script>
+  /* ---------- AI CHATBOT LOGICAL ENGINE ---------- */
+  const chatToggleBtn = document.getElementById('chatToggleBtn');
+  const chatCloseBtn  = document.getElementById('chatCloseBtn');
+  const chatWindow    = document.getElementById('chatWindow');
+  const chatBody      = document.getElementById('chatBody');
+  const chatForm      = document.getElementById('chatForm');
+  const chatInput     = document.getElementById('chatInput');
+  const chatChips     = document.getElementById('chatChips');
+
+  function toggleChat() {
+    chatWindow.classList.toggle('active');
+    chatToggleBtn.classList.toggle('active');
+    if (chatWindow.classList.contains('active')) {
+      chatInput.focus();
+    }
+  }
+
+  chatToggleBtn.addEventListener('click', toggleChat);
+  chatCloseBtn.addEventListener('click', toggleChat);
+
+  function appendMessage(sender, textHtml) {
+    const msgDiv = document.createElement('div');
+    msgDiv.className = `chat-msg ${sender}`;
+    msgDiv.innerHTML = `<div class="chat-bubble">${textHtml}</div>`;
+    chatBody.appendChild(msgDiv);
+    chatBody.scrollTop = chatBody.scrollHeight;
+  }
+
+  function getBotReply(userText) {
+    const txt = userText.toLowerCase();
+
+    if (txt.includes('kabel') || txt.includes('nym') || txt.includes('nya') || txt.includes('rg6') || txt.includes('coaxial')) {
+      return `⚡ <b>Katalog Kabel Listrik & Coaxial:</b><br>Kami menyediakan berbagai varian jenis kabel SNI:<br>
+      • Kabel TV RG6 Coaxial<br>
+      • Kabel AC 3x1.5mm<br>
+      • Kabel NYM & NYA Instalasi Listrik<br><br>
+      👉 Anda dapat memesan langsung via <a href="https://shop.tepegrafi.id" target="_blank" style="color:#2563eb;font-weight:700;">Toko Online</a> kami.`;
+    }
+
+    if (txt.includes('apd') || txt.includes('safety') || txt.includes('helm') || txt.includes('sarung tangan') || txt.includes('k3')) {
+      return `🛡️ <b>Produk Keselamatan Kerja & APD:</b><br>Kami menyediakan kelengkapan APD K3L standar proyek & industri:<br>
+      • Helm Safety Proyek<br>
+      • Sarung Tangan Kerja Pelindung<br>
+      • Kacamata Pelindung & Rompi Safety<br>
+      • Sepatu Safety<br><br>
+      Butuh pengadaan proyek skala besar? Hubungi Tim Sales kami di <a href="https://wa.me/628567224975" target="_blank" style="color:#25d366;font-weight:700;">WhatsApp Direct</a>.`;
+    }
+
+    if (txt.includes('lokasi') || txt.includes('alamat') || txt.includes('kontak') || txt.includes('wa') || txt.includes('telepon')) {
+      return `📍 <b>CV. Listrindo Jaya Elektrik</b><br>
+      <b>Alamat Toko:</b> Jl. Tebet Raya No. 11G 1, Jakarta Selatan<br>
+      <b>WhatsApp Sales:</b> <a href="https://wa.me/628567224975" target="_blank" style="color:#25d366;font-weight:700;">+62 856-7224-975</a><br>
+      <b>Jam Operasional:</b> Senin - Sabtu (08.00 - 17.00 WIB)`;
+    }
+
+    if (txt.includes('pesan') || txt.includes('beli') || txt.includes('order') || txt.includes('toko online') || txt.includes('harga')) {
+      return `🛒 <b>Cara Pemesanan & Pembelian:</b><br>
+      1. Kunjungi <a href="https://shop.tepegrafi.id" target="_blank" style="color:#2563eb;font-weight:700;">shop.tepegrafi.id</a> untuk pesanan satuan.<br>
+      2. Atau kirimkan daftar pesanan proyek/B2B via <a href="https://wa.me/628567224975" target="_blank" style="color:#25d366;font-weight:700;">WhatsApp Kami</a> untuk mendapatkan faktur & penawaran resmi.`;
+    }
+
+    return `Terima kasih telah menghubungi kami! 😊<br>Untuk pertanyaan spesifik mengenai produk, stok, atau permintaan penawaran harga khusus proyek, Tim Sales kami siap melayani Anda di <a href="https://wa.me/628567224975" target="_blank" style="color:#25d366;font-weight:700;">WhatsApp +62 856-7224-975</a>.`;
+  }
+
+  function handleUserQuery(queryText) {
+    if (!queryText.trim()) return;
+    appendMessage('user', escHtml(queryText));
+    
+    // Hide suggested chips after first interaction
+    if (chatChips) chatChips.style.display = 'none';
+
+    // Simulate typing delay
+    setTimeout(() => {
+      const botAnswer = getBotReply(queryText);
+      appendMessage('bot', botAnswer);
+    }, 450);
+  }
+
+  chatForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const val = chatInput.value;
+    chatInput.value = '';
+    handleUserQuery(val);
+  });
+
+  // Attach event to chips
+  document.querySelectorAll('.chip-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      handleUserQuery(btn.dataset.query);
+    });
+  });
+</script>
 
 </body>
 </html>
