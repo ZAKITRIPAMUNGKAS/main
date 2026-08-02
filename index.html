@@ -280,6 +280,13 @@
   /* ---------- KATALOG ---------- */
   .katalog{background:var(--paper-2);}
   .katalog-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:24px;}
+  /* skeleton loading */
+  .katalog-skeleton{ border-radius:var(--radius); overflow:hidden; background:var(--card); border:1px solid var(--line); display:flex; flex-direction:column; }
+  .skel-media{ height:180px; background:linear-gradient(90deg,#e2e8f0 25%,#f1f5f9 50%,#e2e8f0 75%); background-size:200% 100%; animation:shimmer 1.4s infinite; }
+  .skel-body{ padding:20px 22px 24px; display:flex; flex-direction:column; gap:10px; }
+  .skel-line{ height:12px; border-radius:4px; background:linear-gradient(90deg,#e2e8f0 25%,#f1f5f9 50%,#e2e8f0 75%); background-size:200% 100%; animation:shimmer 1.4s infinite; }
+  .skel-line.short{ width:55%; }
+  @keyframes shimmer{ to{ background-position:-200% 0; } }
   .katalog-item{
     background:var(--card); border:1px solid var(--line); display:none; overflow:hidden;
     transition:box-shadow .22s ease, transform .22s ease, border-color .22s ease;
@@ -718,92 +725,24 @@
     <div class="section-head">
       <div class="eyebrow">Daftar Barang</div>
       <h2>Katalog Produk</h2>
-      <p>Berikut daftar produk yang kami sediakan. Gunakan filter untuk melihat berdasarkan jenis barang. Nama, deskripsi, dan foto produk dapat Anda sesuaikan sendiri.</p>
+      <p>Produk yang kami sediakan, diperbarui langsung dari sistem toko kami. Gunakan filter untuk melihat berdasarkan kategori.</p>
     </div>
 
     <div class="tabs" id="katalogTabs">
       <button class="tab-btn active" data-cat="semua">Semua</button>
-      <button class="tab-btn" data-cat="kabel">Kabel</button>
-      <button class="tab-btn" data-cat="keselamatan">Keselamatan / APD</button>
-      <button class="tab-btn" data-cat="perawatan">Perawatan</button>
-      <button class="tab-btn" data-cat="perlengkapan">Perlengkapan Elektrikal</button>
+      <!-- kategori dinamis dari API akan diinjeksi di sini -->
     </div>
 
     <div class="katalog-grid" id="katalogGrid">
-      <div class="katalog-item show" data-cat="kabel">
-        <div class="katalog-media"><span class="katalog-sku">SKU-001</span>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="7" width="18" height="10" rx="1.5"/><path d="M7 7V5m10 2V5M3 12h18"/></svg>
-        </div>
-        <div class="katalog-body"><span class="katalog-tag">Kabel</span><h4>Kabel TV RG6</h4><p>Kabel coaxial untuk instalasi TV kabel &amp; antena, kualitas standar industri.</p></div>
-      </div>
-      <div class="katalog-item show" data-cat="kabel">
-        <div class="katalog-media"><span class="katalog-sku">SKU-002</span>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 8h9l3 3h4v4h-2M4 8v7h2"/></svg>
-        </div>
-        <div class="katalog-body"><span class="katalog-tag">Kabel</span><h4>Kabel AC 3x1.5mm</h4><p>Kabel daya untuk instalasi unit AC rumah maupun komersial.</p></div>
-      </div>
-      <div class="katalog-item show" data-cat="kabel">
-        <div class="katalog-media"><span class="katalog-sku">SKU-003</span>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M13 2 4 14h6l-1 8 9-12h-6l1-8z"/></svg>
-        </div>
-        <div class="katalog-body"><span class="katalog-tag">Kabel</span><h4>Kabel NYM &amp; NYA</h4><p>Kabel instalasi listrik rumah dan gedung sesuai standar SNI.</p></div>
-      </div>
-      <div class="katalog-item show" data-cat="keselamatan">
-        <div class="katalog-media"><span class="katalog-sku">SKU-004</span>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l7 3v6c0 5-3 8.5-7 9-4-.5-7-4-7-9V6l7-3z"/></svg>
-        </div>
-        <div class="katalog-body"><span class="katalog-tag">Keselamatan</span><h4>Helm Safety</h4><p>Pelindung kepala untuk area kerja proyek &amp; industri.</p></div>
-      </div>
-      <div class="katalog-item show" data-cat="keselamatan">
-        <div class="katalog-media"><span class="katalog-sku">SKU-005</span>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M7 11V7a5 5 0 0 1 10 0v4M5 11h14v9a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-9z"/></svg>
-        </div>
-        <div class="katalog-body"><span class="katalog-tag">Keselamatan</span><h4>Sarung Tangan Kerja</h4><p>Melindungi tangan dari benda tajam &amp; panas saat instalasi.</p></div>
-      </div>
-      <div class="katalog-item show" data-cat="keselamatan">
-        <div class="katalog-media"><span class="katalog-sku">SKU-006</span>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="7" cy="12" r="3"/><circle cx="17" cy="12" r="3"/><path d="M10 12h4"/></svg>
-        </div>
-        <div class="katalog-body"><span class="katalog-tag">Keselamatan</span><h4>Kacamata Pelindung</h4><p>Melindungi mata dari percikan &amp; debu selama pekerjaan.</p></div>
-      </div>
-      <div class="katalog-item show" data-cat="keselamatan">
-        <div class="katalog-media"><span class="katalog-sku">SKU-007</span>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 3h12l-2 9H8L6 3zM8 12l-2 9h12l-2-9"/></svg>
-        </div>
-        <div class="katalog-body"><span class="katalog-tag">Keselamatan</span><h4>Rompi &amp; Sepatu Safety</h4><p>Kelengkapan APD standar untuk area proyek &amp; industri.</p></div>
-      </div>
-      <div class="katalog-item show" data-cat="perawatan">
-        <div class="katalog-media"><span class="katalog-sku">SKU-008</span>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3v6M9 6h6M6 12c0 4 2.5 7 6 9 3.5-2 6-5 6-9-2 1-4-.5-6-3-2 2.5-4 4-6 3z"/></svg>
-        </div>
-        <div class="katalog-body"><span class="katalog-tag">Perawatan</span><h4>WD-40 Multi-Use</h4><p>Cairan pelumas &amp; anti karat serba guna untuk perawatan alat.</p></div>
-      </div>
-      <div class="katalog-item show" data-cat="perawatan">
-        <div class="katalog-media"><span class="katalog-sku">SKU-009</span>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 12h16M4 12a8 8 0 0 1 16 0M4 12a8 8 0 0 0 16 0"/></svg>
-        </div>
-        <div class="katalog-body"><span class="katalog-tag">Perawatan</span><h4>Pelumas Kontak Elektrik</h4><p>Menjaga performa sambungan &amp; komponen kelistrikan.</p></div>
-      </div>
-      <div class="katalog-item show" data-cat="perlengkapan">
-        <div class="katalog-media"><span class="katalog-sku">SKU-010</span>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="6" y="4" width="12" height="16" rx="2"/><circle cx="12" cy="12" r="1.5"/></svg>
-        </div>
-        <div class="katalog-body"><span class="katalog-tag">Perlengkapan</span><h4>Saklar &amp; Stop Kontak</h4><p>Berbagai jenis saklar &amp; stop kontak untuk kebutuhan instalasi rumah dan gedung.</p></div>
-      </div>
-      <div class="katalog-item show" data-cat="perlengkapan">
-        <div class="katalog-media"><span class="katalog-sku">SKU-011</span>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="9" r="6"/><path d="M9 21h6M10 15l1 6 1-6"/></svg>
-        </div>
-        <div class="katalog-body"><span class="katalog-tag">Perlengkapan</span><h4>Fitting &amp; Lampu</h4><p>Fitting lampu dan berbagai jenis lampu untuk kebutuhan penerangan.</p></div>
-      </div>
-      <div class="katalog-item show" data-cat="perlengkapan">
-        <div class="katalog-media"><span class="katalog-sku">SKU-012</span>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="5" width="16" height="14" rx="1.5"/><path d="M4 10h16"/></svg>
-        </div>
-        <div class="katalog-body"><span class="katalog-tag">Perlengkapan</span><h4>MCB / Circuit Breaker</h4><p>Pengaman arus listrik untuk instalasi rumah, kantor, dan industri.</p></div>
-      </div>
+      <!-- skeleton sementara API dimuat -->
+      <div class="katalog-skeleton"><div class="skel-media"></div><div class="skel-body"><div class="skel-line short"></div><div class="skel-line"></div><div class="skel-line"></div></div></div>
+      <div class="katalog-skeleton"><div class="skel-media"></div><div class="skel-body"><div class="skel-line short"></div><div class="skel-line"></div><div class="skel-line"></div></div></div>
+      <div class="katalog-skeleton"><div class="skel-media"></div><div class="skel-body"><div class="skel-line short"></div><div class="skel-line"></div><div class="skel-line"></div></div></div>
+      <div class="katalog-skeleton"><div class="skel-media"></div><div class="skel-body"><div class="skel-line short"></div><div class="skel-line"></div><div class="skel-line"></div></div></div>
+      <div class="katalog-skeleton"><div class="skel-media"></div><div class="skel-body"><div class="skel-line short"></div><div class="skel-line"></div><div class="skel-line"></div></div></div>
+      <div class="katalog-skeleton"><div class="skel-media"></div><div class="skel-body"><div class="skel-line short"></div><div class="skel-line"></div><div class="skel-line"></div></div></div>
     </div>
-    <p class="katalog-empty" id="katalogEmpty">Tidak ada produk pada kategori ini.</p>
+    <p class="katalog-empty" id="katalogEmpty" style="display:none;">Tidak ada produk pada kategori ini.</p>
   </div>
 </section>
 
@@ -1001,24 +940,108 @@
     btn.classList.add('active');
   }
 
-  /* ---------- katalog filter ---------- */
-  const katalogTabs = document.querySelectorAll('#katalogTabs .tab-btn');
-  const katalogItems = document.querySelectorAll('#katalogGrid .katalog-item');
-  const katalogEmpty = document.getElementById('katalogEmpty');
-  katalogTabs.forEach(btn => {
-    btn.addEventListener('click', () => {
-      katalogTabs.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      const cat = btn.dataset.cat;
-      let visible = 0;
-      katalogItems.forEach(item => {
-        const match = cat === 'semua' || item.dataset.cat === cat;
-        item.classList.toggle('show', match);
-        if(match) visible++;
-      });
-      katalogEmpty.style.display = visible === 0 ? 'block' : 'none';
+  /* ---------- KATALOG PRODUK — Data dari OLSHOP API ---------- */
+  const OLSHOP_API = 'https://shop.tepegrafi.id/api/v1/storefront';
+  const katalogGrid   = document.getElementById('katalogGrid');
+  const katalogTabs   = document.getElementById('katalogTabs');
+  const katalogEmpty  = document.getElementById('katalogEmpty');
+  let   allProducts   = [];
+  let   activeFilter  = 'semua';
+
+  function escHtml(str) {
+    return String(str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  function buildKatalogCard(p) {
+    const catSlug = p.category ? (p.category.slug || '') : '';
+    const catName = p.category ? escHtml(p.category.name) : 'Produk';
+    const hasImg  = p.image_url && !p.image_url.includes('placehold');
+    const mediaHtml = hasImg
+      ? `<img src="${escHtml(p.image_url)}" alt="${escHtml(p.name)}" loading="lazy" style="width:100%;height:100%;object-fit:cover;">`
+      : `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M13 2 4 14h6l-1 8 9-12h-6l1-8z"/></svg>`;
+    return `
+      <div class="katalog-item show" data-cat="${escHtml(catSlug)}" data-id="${p.id}">
+        <div class="katalog-media">
+          <span class="katalog-sku">${escHtml(p.sku)}</span>
+          ${mediaHtml}
+        </div>
+        <div class="katalog-body">
+          <span class="katalog-tag">${catName}</span>
+          <h4>${escHtml(p.name)}</h4>
+          <p>${escHtml((p.description || '').substring(0, 100))}${(p.description || '').length > 100 ? '…' : ''}</p>
+          ${p.price > 0 ? `<p style="margin-top:8px;font-family:var(--mono);font-size:12px;color:var(--orange);font-weight:700;">${escHtml(p.price_idr)}</p>` : ''}
+        </div>
+      </div>`;
+  }
+
+  function renderKatalog(catSlug) {
+    activeFilter = catSlug || 'semua';
+    const filtered = activeFilter === 'semua'
+      ? allProducts
+      : allProducts.filter(p => p.category && p.category.slug === activeFilter);
+
+    katalogGrid.innerHTML = filtered.length
+      ? filtered.map(buildKatalogCard).join('')
+      : '';
+
+    katalogEmpty.style.display = filtered.length === 0 ? 'block' : 'none';
+
+    // re-attach scroll reveal
+    katalogGrid.querySelectorAll('.katalog-item').forEach(el => {
+      el.classList.add('reveal');
+      observer.observe(el);
     });
-  });
+  }
+
+  function buildKatalogTabs(categories) {
+    const existing = katalogTabs.querySelectorAll('[data-cat]:not([data-cat="semua"])');
+    existing.forEach(el => el.remove());
+    categories.forEach(cat => {
+      const btn = document.createElement('button');
+      btn.className = 'tab-btn';
+      btn.dataset.cat = cat.slug;
+      btn.textContent = cat.name;
+      btn.addEventListener('click', () => {
+        katalogTabs.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        renderKatalog(cat.slug);
+      });
+      katalogTabs.appendChild(btn);
+    });
+    // wire the "Semua" button
+    const semuaBtn = katalogTabs.querySelector('[data-cat="semua"]');
+    if (semuaBtn) {
+      semuaBtn.addEventListener('click', () => {
+        katalogTabs.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        semuaBtn.classList.add('active');
+        renderKatalog('semua');
+      });
+    }
+  }
+
+  async function loadKatalog() {
+    try {
+      const [prodRes, catRes] = await Promise.all([
+        fetch(OLSHOP_API + '/products?limit=48'),
+        fetch(OLSHOP_API + '/categories')
+      ]);
+      const prodData = await prodRes.json();
+      const catData  = await catRes.json();
+
+      if (prodData.success && Array.isArray(prodData.products)) {
+        allProducts = prodData.products;
+      }
+      if (catData.success && Array.isArray(catData.categories)) {
+        buildKatalogTabs(catData.categories);
+      }
+      renderKatalog('semua');
+    } catch(err) {
+      // fallback: tampilkan pesan jika API tidak terjangkau
+      katalogGrid.innerHTML = '<p style="font-family:var(--mono);font-size:13px;color:var(--steel);padding:40px 0;text-align:center;">Katalog sedang dimuat... Pastikan toko online aktif.</p>';
+    }
+  }
+
+  loadKatalog();
 
   /* ---------- riwayat pekerjaan upload (tersimpan permanen di server) ---------- */
   const fileInput = document.getElementById('fileInput');
