@@ -1,0 +1,24 @@
+{
+  "name": "listrindo-landing-tests",
+  "version": "1.0.0",
+  "description": "Unit & Integration tests for CV. Listrindo Jaya Elektrik landing page",
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0"
+  },
+  "jest": {
+    "testEnvironment": "jsdom",
+    "testMatch": [
+      "**/tests/**/*.test.js"
+    ],
+    "collectCoverageFrom": [
+      "*.js",
+      "!node_modules/**"
+    ]
+  }
+}
