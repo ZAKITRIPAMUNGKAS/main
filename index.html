@@ -1260,7 +1260,7 @@
 
 <!-- Floating Action Buttons & AI Chatbot Hub -->
 <div id="floating-hub" class="floating-hub">
-  <!-- Chatbot Window Modal (Positioned Above FAB Dock) -->
+  <!-- Chatbot Window Modal (Positioned Above FAB Hub) -->
   <div id="chatWindow" class="chat-window">
     <div class="chat-header">
       <div class="chat-avatar-wrap">
@@ -1301,38 +1301,48 @@
     </form>
   </div>
 
-  <!-- FAB Action Stack -->
-  <div class="fab-stack">
-    <!-- Chatbot Toggle Button -->
-    <button id="chatToggleBtn" class="fab-btn fab-chat" aria-label="Tanya AI Assistant">
-      <span class="fab-badge">AI</span>
-      <div class="icon-open fab-avatar-svg-wrap">
-        <svg class="minimal-bot-icon" viewBox="0 0 100 100" style="width:32px;height:32px;">
-          <path d="M 50 18 C 30 18 15 32 15 50 C 15 62 23 72 35 77 C 33 84 27 91 25 93 C 28 93 38 91 47 81 C 48 81 49 81 50 81 C 70 81 85 67 85 50 C 85 32 70 18 50 18 Z" fill="#ffffff"/>
-          <path d="M 33 48 Q 38 42 43 48" fill="none" stroke="#0b3b66" stroke-width="5" stroke-linecap="round"/>
-          <path d="M 57 48 Q 62 42 67 48" fill="none" stroke="#0b3b66" stroke-width="5" stroke-linecap="round"/>
-        </svg>
-      </div>
-      <i class="fas fa-times icon-close"></i>
-      <span class="fab-tooltip">Tanya AI Assistant</span>
+  <!-- Collapsible FAB Speed-Dial Hub -->
+  <div class="fab-container" id="fabContainer">
+    <!-- Sub-menu buttons (Shown when expanded) -->
+    <div class="fab-menu" id="fabMenu">
+      <!-- AI Chatbot Button -->
+      <button id="chatToggleBtn" class="fab-sub-btn fab-chat" aria-label="Tanya AI Assistant">
+        <span class="fab-badge">AI</span>
+        <div class="fab-avatar-svg-wrap">
+          <svg class="minimal-bot-icon" viewBox="0 0 100 100" style="width:30px;height:30px;">
+            <path d="M 50 18 C 30 18 15 32 15 50 C 15 62 23 72 35 77 C 33 84 27 91 25 93 C 28 93 38 91 47 81 C 48 81 49 81 50 81 C 70 81 85 67 85 50 C 85 32 70 18 50 18 Z" fill="#ffffff"/>
+            <path d="M 33 48 Q 38 42 43 48" fill="none" stroke="#0b3b66" stroke-width="5" stroke-linecap="round"/>
+            <path d="M 57 48 Q 62 42 67 48" fill="none" stroke="#0b3b66" stroke-width="5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <span class="fab-tooltip">Tanya AI Assistant</span>
+      </button>
+
+      <!-- Toko Online Button -->
+      <a href="https://shop.tepegrafi.id" target="_blank" rel="noopener" aria-label="Toko Online" class="fab-sub-btn fab-shop">
+        <i class="fas fa-shopping-bag"></i>
+        <span class="fab-tooltip">Kunjungi Toko Online</span>
+      </a>
+
+      <!-- WhatsApp Button -->
+      <a href="https://wa.me/628567224975" target="_blank" rel="noopener" aria-label="Chat WhatsApp" class="fab-sub-btn fab-wa">
+        <i class="fab fa-whatsapp"></i>
+        <span class="fab-tooltip">Chat WhatsApp Direct</span>
+      </a>
+    </div>
+
+    <!-- Main Trigger Button (Always visible) -->
+    <button id="fabMainTrigger" class="fab-main-trigger" aria-label="Buka Menu Layanan">
+      <span class="trigger-badge">3</span>
+      <i class="fas fa-comment-dots icon-main-chat"></i>
+      <i class="fas fa-times icon-main-close"></i>
+      <span class="fab-tooltip trigger-tooltip">Buka Layanan & Chat</span>
     </button>
-
-    <!-- Toko Online Button -->
-    <a href="https://shop.tepegrafi.id" target="_blank" rel="noopener" aria-label="Toko Online" class="fab-btn fab-shop">
-      <i class="fas fa-shopping-bag"></i>
-      <span class="fab-tooltip">Kunjungi Toko Online</span>
-    </a>
-
-    <!-- WhatsApp Button -->
-    <a href="https://wa.me/628567224975" target="_blank" rel="noopener" aria-label="Chat WhatsApp" class="fab-btn fab-wa">
-      <i class="fab fa-whatsapp"></i>
-      <span class="fab-tooltip">Chat WhatsApp (+628567224975)</span>
-    </a>
   </div>
 </div>
 
 <style>
-/* ---------- FLOATING HUB & FAB STYLES ---------- */
+/* ---------- FLOATING HUB & FAB COLLAPSIBLE STYLES ---------- */
 .floating-hub {
   position: fixed;
   bottom: 24px;
@@ -1344,18 +1354,103 @@
   font-family: var(--sans, 'Inter', system-ui, sans-serif);
 }
 
-.fab-stack {
+.fab-container {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 12px;
-  width: 52px;
 }
 
-.fab-btn {
+/* Main Trigger Button */
+.fab-main-trigger {
   position: relative;
-  width: 52px;
-  height: 52px;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #0b3b66, #1d4ed8);
+  color: #ffffff;
+  border: 2px solid rgba(255,255,255,0.25);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  box-shadow: 0 10px 30px rgba(11,59,102,0.4);
+  transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1), background 0.3s ease, box-shadow 0.3s ease;
+  z-index: 10;
+}
+
+.fab-main-trigger:hover {
+  transform: scale(1.08);
+  box-shadow: 0 14px 36px rgba(29,78,216,0.55);
+}
+
+.fab-main-trigger .icon-main-close {
+  display: none;
+  font-size: 24px;
+}
+
+.fab-container.open .fab-main-trigger {
+  background: #0b132b;
+  transform: rotate(90deg);
+}
+
+.fab-container.open .fab-main-trigger .icon-main-chat {
+  display: none;
+}
+
+.fab-container.open .fab-main-trigger .icon-main-close {
+  display: block;
+}
+
+.trigger-badge {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  background: #f59e0b;
+  color: #0b132b;
+  font-size: 10px;
+  font-weight: 800;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  border: 2px solid #0b3b66;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.fab-container.open .trigger-badge {
+  opacity: 0;
+  transform: scale(0.5);
+}
+
+/* Sub Menu Stack (Expanded) */
+.fab-menu {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(20px) scale(0.85);
+  transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
+  margin-bottom: 4px;
+}
+
+.fab-container.open .fab-menu {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0) scale(1);
+}
+
+.fab-sub-btn {
+  position: relative;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
   display: inline-flex;
   align-items: center;
@@ -1363,35 +1458,25 @@
   text-decoration: none;
   border: none;
   cursor: pointer;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.18);
-  transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.25s ease, background 0.2s ease;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.fab-btn:hover {
-  transform: translateY(-3px) scale(1.08);
+.fab-sub-btn:hover {
+  transform: translateY(-3px) scale(1.1);
 }
 
-/* Chatbot FAB */
+/* Chatbot Sub-FAB */
 .fab-chat {
   background: linear-gradient(135deg, #0b3b66, #1d4ed8);
   color: #fff;
-  font-size: 20px;
-  padding: 0;
   border: 2px solid rgba(255,255,255,0.2);
 }
 .fab-avatar-svg-wrap {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
 }
-.fab-chat .icon-close { display: none; font-size: 22px; }
-.fab-chat.active {
-  background: #0b132b;
-}
-.fab-chat.active .icon-open { display: none; }
-.fab-chat.active .icon-close { display: block; }
 .fab-chat .fab-badge {
   position: absolute;
   top: -2px;
@@ -1404,28 +1489,27 @@
   border-radius: 10px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.3);
   font-family: var(--mono);
-  z-index: 2;
 }
 
-/* Toko Online FAB */
+/* Toko Online Sub-FAB */
 .fab-shop {
   background: linear-gradient(135deg, #1d4ed8, #0b3b66);
   color: #fff;
-  font-size: 20px;
+  font-size: 19px;
   border: 2px solid rgba(255,255,255,0.2);
 }
 .fab-shop:hover {
-  box-shadow: 0 12px 30px rgba(29,78,216,0.5);
+  box-shadow: 0 10px 26px rgba(29,78,216,0.5);
 }
 
-/* WhatsApp FAB */
+/* WhatsApp Sub-FAB */
 .fab-wa {
   background: #25d366;
   color: #fff;
-  font-size: 24px;
+  font-size: 22px;
 }
 .fab-wa:hover {
-  box-shadow: 0 10px 28px rgba(37,211,102,0.55);
+  box-shadow: 0 10px 26px rgba(37,211,102,0.55);
 }
 
 /* Tooltips */
@@ -1447,15 +1531,20 @@
   box-shadow: 0 6px 20px rgba(0,0,0,0.25);
   border: 1px solid rgba(255,255,255,0.12);
 }
-.fab-btn:hover .fab-tooltip {
+.fab-sub-btn:hover .fab-tooltip,
+.fab-main-trigger:hover .trigger-tooltip {
   opacity: 1;
   transform: translateX(0);
+}
+
+.fab-container.open .trigger-tooltip {
+  display: none;
 }
 
 /* ---------- AI CHATBOT WINDOW STYLES ---------- */
 .chat-window {
   position: fixed;
-  bottom: 90px;
+  bottom: 95px;
   right: 24px;
   width: 370px;
   max-width: calc(100vw - 32px);
@@ -1668,7 +1757,7 @@
 
 @media (max-width: 600px) {
   .chat-window {
-    bottom: 82px;
+    bottom: 90px;
     right: 16px;
     width: calc(100vw - 32px);
     height: calc(100vh - 110px);
@@ -1677,25 +1766,47 @@
 </style>
 
 <script>
-  /* ---------- AI CHATBOT LOGICAL ENGINE ---------- */
-  const chatToggleBtn = document.getElementById('chatToggleBtn');
-  const chatCloseBtn  = document.getElementById('chatCloseBtn');
-  const chatWindow    = document.getElementById('chatWindow');
-  const chatBody      = document.getElementById('chatBody');
-  const chatForm      = document.getElementById('chatForm');
-  const chatInput     = document.getElementById('chatInput');
-  const chatChips     = document.getElementById('chatChips');
+  /* ---------- AI CHATBOT & FAB COLLAPSIBLE ENGINE ---------- */
+  const floatingHub    = document.getElementById('floating-hub');
+  const fabContainer   = document.getElementById('fabContainer');
+  const fabMainTrigger = document.getElementById('fabMainTrigger');
+  const chatToggleBtn  = document.getElementById('chatToggleBtn');
+  const chatCloseBtn   = document.getElementById('chatCloseBtn');
+  const chatWindow     = document.getElementById('chatWindow');
+  const chatBody       = document.getElementById('chatBody');
+  const chatForm       = document.getElementById('chatForm');
+  const chatInput      = document.getElementById('chatInput');
+  const chatChips      = document.getElementById('chatChips');
+
+  // Toggle speed dial menu collapse / expand
+  fabMainTrigger.addEventListener('click', (e) => {
+    e.stopPropagation();
+    fabContainer.classList.toggle('open');
+  });
 
   function toggleChat() {
     chatWindow.classList.toggle('active');
-    chatToggleBtn.classList.toggle('active');
     if (chatWindow.classList.contains('active')) {
       chatInput.focus();
     }
   }
 
-  chatToggleBtn.addEventListener('click', toggleChat);
+  chatToggleBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    toggleChat();
+  });
   chatCloseBtn.addEventListener('click', toggleChat);
+
+  // Close menu when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!floatingHub.contains(e.target)) {
+      fabContainer.classList.remove('open');
+    }
+  });
+
+  function escHtml(unsafe) {
+    return unsafe.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+  }
 
   function appendMessage(sender, textHtml) {
     const msgDiv = document.createElement('div');
@@ -1745,10 +1856,8 @@
     if (!queryText.trim()) return;
     appendMessage('user', escHtml(queryText));
     
-    // Hide suggested chips after first interaction
     if (chatChips) chatChips.style.display = 'none';
 
-    // Simulate typing delay
     setTimeout(() => {
       const botAnswer = getBotReply(queryText);
       appendMessage('bot', botAnswer);
@@ -1762,7 +1871,6 @@
     handleUserQuery(val);
   });
 
-  // Attach event to chips
   document.querySelectorAll('.chip-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       handleUserQuery(btn.dataset.query);
@@ -1772,4 +1880,3 @@
 
 </body>
 </html>
-
