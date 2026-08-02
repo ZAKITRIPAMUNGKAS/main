@@ -952,6 +952,10 @@
     return String(str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
   }
 
+  function stripTags(str) {
+    return String(str || '').replace(/<[^>]*>?/gm, '').trim();
+  }
+
   function buildKatalogCard(p) {
     const catSlug = p.category ? (p.category.slug || '') : '';
     const catName = p.category ? escHtml(p.category.name) : 'Produk';
@@ -959,6 +963,7 @@
     const mediaHtml = hasImg
       ? `<img src="${escHtml(p.image_url)}" alt="${escHtml(p.name)}" loading="lazy" style="width:100%;height:100%;object-fit:cover;">`
       : `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M13 2 4 14h6l-1 8 9-12h-6l1-8z"/></svg>`;
+    const plainDesc = stripTags(p.description);
     return `
       <div class="katalog-item show" data-cat="${escHtml(catSlug)}" data-id="${p.id}">
         <div class="katalog-media">
@@ -968,7 +973,7 @@
         <div class="katalog-body">
           <span class="katalog-tag">${catName}</span>
           <h4>${escHtml(p.name)}</h4>
-          <p>${escHtml((p.description || '').substring(0, 100))}${(p.description || '').length > 100 ? '…' : ''}</p>
+          <p>${escHtml(plainDesc.substring(0, 100))}${plainDesc.length > 100 ? '…' : ''}</p>
           ${p.price > 0 ? `<p style="margin-top:8px;font-family:var(--mono);font-size:12px;color:var(--orange);font-weight:700;">${escHtml(p.price_idr)}</p>` : ''}
         </div>
       </div>`;

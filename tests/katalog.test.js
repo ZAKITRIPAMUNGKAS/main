@@ -58,6 +58,10 @@ function escHtml(str) {
     .replace(/"/g, '&quot;');
 }
 
+function stripTags(str) {
+  return String(str || '').replace(/<[^>]*>?/gm, '').trim();
+}
+
 function buildKatalogCard(p) {
   const catSlug = p.category ? (p.category.slug || '') : '';
   const catName = p.category ? escHtml(p.category.name) : 'Produk';
@@ -65,6 +69,7 @@ function buildKatalogCard(p) {
   const mediaHtml = hasImg
     ? `<img src="${escHtml(p.image_url)}" alt="${escHtml(p.name)}" loading="lazy" style="width:100%;height:100%;object-fit:cover;">`
     : `<svg viewBox="0 0 24 24"><path d="M13 2 4 14h6l-1 8 9-12h-6l1-8z"/></svg>`;
+  const plainDesc = stripTags(p.description);
   return `
     <div class="katalog-item show" data-cat="${escHtml(catSlug)}" data-id="${p.id}">
       <div class="katalog-media">
@@ -74,7 +79,7 @@ function buildKatalogCard(p) {
       <div class="katalog-body">
         <span class="katalog-tag">${catName}</span>
         <h4>${escHtml(p.name)}</h4>
-        <p>${escHtml((p.description || '').substring(0, 100))}${(p.description || '').length > 100 ? '…' : ''}</p>
+        <p>${escHtml(plainDesc.substring(0, 100))}${plainDesc.length > 100 ? '…' : ''}</p>
         ${p.price > 0 ? `<p class="price">${escHtml(p.price_idr)}</p>` : ''}
       </div>
     </div>`;
@@ -193,6 +198,13 @@ describe('buildKatalogCard – card HTML generation', () => {
     const p = { ...baseProduct, category: null };
     const html = buildKatalogCard(p);
     expect(html).toContain('data-cat=""');
+  });
+
+  test('strips HTML tags like <p> from description', () => {
+    const p = { ...baseProduct, description: '<p>Gerinda tangan slim design untuk kenyamanan penggunaan lama.</p>' };
+    const html = buildKatalogCard(p);
+    expect(html).not.toContain('&lt;p&gt;');
+    expect(html).toContain('Gerinda tangan slim design');
   });
 
   test('escapes XSS in product name', () => {
