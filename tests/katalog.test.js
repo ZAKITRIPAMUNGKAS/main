@@ -354,8 +354,8 @@ describe('loadKatalog – API fetch and render', () => {
 
   test('calls both products and categories endpoints', async () => {
     mockFetch(mockProducts, mockCategories);
-    const prodRes = await fetch('https://shop.tepegrafi.id/api/v1/storefront/products?limit=48');
-    const catRes  = await fetch('https://shop.tepegrafi.id/api/v1/storefront/categories');
+    const prodRes = await fetch('https://shop.listrindojayaelektrik.com/api/v1/storefront/products?limit=48');
+    const catRes  = await fetch('https://shop.listrindojayaelektrik.com/api/v1/storefront/categories');
     const pData = await prodRes.json();
     const cData = await catRes.json();
 
@@ -369,7 +369,7 @@ describe('loadKatalog – API fetch and render', () => {
     global.fetch.mockRejectedValue(new Error('Network Error'));
     let errorCaught = false;
     try {
-      await fetch('https://shop.tepegrafi.id/api/v1/storefront/products?limit=48');
+      await fetch('https://shop.listrindojayaelektrik.com/api/v1/storefront/products?limit=48');
     } catch (e) {
       errorCaught = true;
       // Fallback message should be displayed in real implementation
